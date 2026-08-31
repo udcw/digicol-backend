@@ -5,7 +5,10 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
 from .serializers import RegisterSerializer, UserSerializer, CustomTokenObtainPairSerializer
-
+from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_protect
+from django.utils.decorators import method_decorator
 User = get_user_model()
 
 class RegisterView(generics.CreateAPIView):
@@ -24,7 +27,13 @@ class RegisterView(generics.CreateAPIView):
                 'user': UserSerializer(user).data
             }, status=201)
         return Response(serializer.errors, status=400)
-
+class AdminLoginView(LoginView):
+    template_name = 'admin/login.html'
+    success_url = reverse_lazy('admin:index')
+    
+    @method_decorator(csrf_protect)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 class CustomTokenObtainPairView(TokenObtainPairView):
     """Connexion - Obtention du token JWT"""
     serializer_class = CustomTokenObtainPairSerializer
