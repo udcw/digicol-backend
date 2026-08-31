@@ -1,17 +1,30 @@
-# accounts/admin.py
+# accounts/admin.py - VERSION SIMPLIFIÉE
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User
 
-@admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    list_display = ['username', 'email', 'digicol_id', 'role', 'is_verified']
-    list_filter = ['role', 'is_verified']
-    search_fields = ['username', 'email', 'digicol_id']
+    """Configuration de l'admin pour User"""
+    list_display = ('username', 'email', 'first_name', 'last_name', 'role', 'digicol_id')
+    list_filter = ('role', 'is_staff', 'is_active')
+    search_fields = ('username', 'email', 'digicol_id')
+    ordering = ('-date_joined',)
     
-    fieldsets = UserAdmin.fieldsets + (
-        ('Informations DigiCol', {
-            'fields': ('role', 'phone', 'avatar', 'digicol_id', 'is_verified'),
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Informations personnelles', {'fields': ('first_name', 'last_name', 'email', 'phone', 'avatar')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'role', 'groups', 'user_permissions')}),
+        ('Informations DigiCol', {'fields': ('digicol_id', 'is_verified')}),
+        ('Dates importantes', {'fields': ('last_login', 'date_joined')}),
+    )
+    
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2', 'role'),
         }),
     )
+
+# Enregistrer le modèle avec l'admin personnalisé
+admin.site.register(User, CustomUserAdmin)

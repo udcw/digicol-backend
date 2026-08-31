@@ -1,4 +1,4 @@
-# accounts/models.py
+# accounts/models.py - VERSION SIMPLIFIÉE
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
