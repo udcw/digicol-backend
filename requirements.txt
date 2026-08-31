@@ -8,4 +8,4 @@ python-decouple==3.8
 psycopg2-binary==2.9.10
 gunicorn==21.2.0
 whitenoise==6.6.0
-pip install dj-database-url
+dj-database-url==2.1.0
