@@ -16,8 +16,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-@dev-key-12345678901234567
 # DEBUG - False en production
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-# ALLOWED_HOSTS
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,digicol-backend-1.onrender.com').split(',')
+# ⭐ ALLOWED_HOSTS - AJOUTER LE DOMAINE RAILWAY ⭐
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,digicol-backend-production.up.railway.app').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -107,18 +107,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ⭐ CORS Configuration améliorée ⭐
-CORS_ALLOWED_ORIGINS = os.getenv(
-    'CORS_ALLOWED_ORIGINS',
-    'http://localhost:3000,http://127.0.0.1:3000'
+# ⭐ CSRF_TRUSTED_ORIGINS - POUR L'ADMIN SUR RAILWAY ⭐
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    'CSRF_TRUSTED_ORIGINS',
+    'https://digicol-backend-production.up.railway.app,http://localhost:8000'
 ).split(',')
 
-# Ajouter les origines Vercel automatiquement si en production
-if not DEBUG:
-    CORS_ALLOWED_ORIGINS += [
-        'https://digicol-frontend.vercel.app',
-        'https://digicol-frontend-*.vercel.app',
-    ]
+# ⭐ CORS Configuration ⭐
+CORS_ALLOWED_ORIGINS = os.getenv(
+    'CORS_ALLOWED_ORIGINS',
+    'http://localhost:3000,http://127.0.0.1:3000,https://digicol-frontend.vercel.app'
+).split(',')
 
 # Autoriser les méthodes et headers
 CORS_ALLOW_METHODS = [
