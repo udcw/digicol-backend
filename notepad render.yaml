@@ -1,0 +1,31 @@
+# render.yaml
+
+services:
+  - type: web
+    name: digicol-backend
+    env: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+    startCommand: gunicorn digicol_backend.wsgi:application
+    healthCheckPath: /api/health/
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: digicol-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: digicol-backend.onrender.com
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://digicol-frontend.vercel.app
+
+databases:
+  - name: digicol-db
+    plan: free
+    diskSizeGB: 1
