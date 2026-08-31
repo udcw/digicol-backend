@@ -9,9 +9,12 @@ pip install -r requirements.txt
 python manage.py collectstatic --noinput
 
 # ⭐ FORCER LES MIGRATIONS ⭐
-echo "🔄 Application des migrations..."
+echo "🔄 Création et application des migrations..."
 python manage.py makemigrations
 python manage.py migrate --noinput
+
+# ⭐ CRÉER LES TABLES SI ELLES N'EXISTENT PAS ⭐
+python manage.py migrate --run-syncdb
 
 # Créer un superutilisateur
 python -c "
