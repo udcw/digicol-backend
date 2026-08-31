@@ -8,13 +8,9 @@ pip install -r requirements.txt
 # Collecter les fichiers statiques
 python manage.py collectstatic --noinput
 
-# ⭐ FORCER LES MIGRATIONS ⭐
-echo "🔄 Création et application des migrations..."
-python manage.py makemigrations
+# ⭐ UTILISER LES MIGRATIONS EXISTANTES ⭐
+echo "🔄 Application des migrations existantes..."
 python manage.py migrate --noinput
-
-# ⭐ CRÉER LES TABLES SI ELLES N'EXISTENT PAS ⭐
-python manage.py migrate --run-syncdb
 
 # Créer un superutilisateur
 python -c "
@@ -26,9 +22,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 if not User.objects.filter(username='admin').exists():
     User.objects.create_superuser('admin', 'admin@digicol.com', 'DigiCol2026')
-    print('✅ Superutilisateur créé !')
-else:
-    print('✅ Superutilisateur existe déjà.')
+    print('✅ Superutilisateur créé')
 "
 
 echo "✅ Build terminé !"
