@@ -1,4 +1,4 @@
-# accounts/admin.py - VERSION SIMPLIFIÉE
+# accounts/admin.py
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -6,9 +6,9 @@ from .models import User
 
 class CustomUserAdmin(UserAdmin):
     """Configuration de l'admin pour User"""
-    list_display = ('username', 'email', 'first_name', 'last_name', 'role', 'digicol_id')
-    list_filter = ('role', 'is_staff', 'is_active')
-    search_fields = ('username', 'email', 'digicol_id')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'role', 'digicol_id', 'is_staff')
+    list_filter = ('role', 'is_staff', 'is_active', 'is_superuser')
+    search_fields = ('username', 'email', 'first_name', 'last_name', 'digicol_id')
     ordering = ('-date_joined',)
     
     fieldsets = (

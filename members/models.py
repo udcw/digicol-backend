@@ -27,9 +27,5 @@ class Member(models.Model):
         return self.full_name
     
     def get_digicol_id(self):
-        return self.user.digicol_id
-    
-    def save(self, *args, **kwargs):
-        if not self.full_name:
-            self.full_name = f"{self.user.first_name} {self.user.last_name}".strip() or self.user.username
-        super().save(*args, **kwargs)
+        """Récupère l'ID DigiCol de l'utilisateur"""
+        return self.user.digicol_id if self.user else None
