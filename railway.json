@@ -1,0 +1,9 @@
+{
+  "build": {
+    "builder": "DOCKERFILE"
+  },
+  "deploy": {
+    "startCommand": "gunicorn digicol_backend.wsgi:application",
+    "healthcheckPath": "/api/health/"
+  }
+}
