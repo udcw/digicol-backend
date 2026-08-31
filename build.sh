@@ -8,8 +8,10 @@ pip install -r requirements.txt
 # Collecter les fichiers statiques
 python manage.py collectstatic --noinput
 
-# ⭐ UTILISER LES MIGRATIONS EXISTANTES ⭐
-echo "🔄 Application des migrations existantes..."
+# ⭐ FORCER LA CRÉATION ET L'APPLICATION DES MIGRATIONS ⭐
+echo "🔄 Création des migrations..."
+python manage.py makemigrations accounts
+python manage.py makemigrations
 python manage.py migrate --noinput
 
 # Créer un superutilisateur
