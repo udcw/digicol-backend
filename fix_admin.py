@@ -1,8 +1,8 @@
-# fix_admin.py
+# create_all_admins.py
 
 import os
 
-ADMIN_TEMPLATES = {
+ADMINS = {
     'accounts': """
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -113,11 +113,10 @@ class TransactionAdmin(admin.ModelAdmin):
 @admin.register(PaymentMethod)
 class PaymentMethodAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'is_active']
-""",
+"""
 }
 
-for app, content in ADMIN_TEMPLATES.items():
-    filepath = f'{app}/admin.py'
-    with open(filepath, 'w', encoding='utf-8') as f:
+for app, content in ADMINS.items():
+    with open(f'{app}/admin.py', 'w', encoding='utf-8') as f:
         f.write(content.strip())
-    print(f'✅ {app}/admin.py mis à jour')
+    print(f'✅ {app}/admin.py créé')
